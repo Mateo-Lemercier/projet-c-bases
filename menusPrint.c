@@ -1,5 +1,7 @@
 #include <stdio.h>
-#include <varTypes.h>
+#include <stdlib.h>
+#include "varTypes.h"
+#include "bigCharacters.c"
 
 
 
