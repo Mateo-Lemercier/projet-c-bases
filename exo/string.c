@@ -136,8 +136,8 @@ int main()
     String str1 = Create( "Bonjour" );
     
     Print( &str1 );
-    
-    String str2 = Create( "Aurevoir" );
+    /*
+    String str2 = Create( "AuRevoir" );
     
     String str3 = Concatenate1( &str1, &str2 );
     
@@ -146,6 +146,6 @@ int main()
     Destroy( &str1 );
     Destroy( &str2 );
     Destroy( &str3 );
-    
+    */
     return 0;
 }
