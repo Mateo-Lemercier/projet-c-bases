@@ -1,15 +1,10 @@
 #include <stdio.h>
-#define __stdio_h__
 #include <stdlib.h>
-#define __stdlib_h__
 #include <time.h>
-#define __time_h__
 #include <conio.h>
-#define __conio_h__
 #include "genericFunctions.c"
-#define __genericFunctions_c__
 #include "bigCharacters.c"
-#define __bigCharacters_c__
+#include "cvarTypes.h"
 
 #define KEY_SPACE 32
 #define KEY_ENTER 13
@@ -20,19 +15,6 @@
 #define KEY_LEFT_ARROW 75
 #define KEY_RIGHT_ARROW 77
 #define KEY_DOWN_ARROW 80
-
-typedef int int4;
-typedef unsigned int uint4;
-
-typedef short int2;
-typedef unsigned short uint2;
-
-typedef char int1;
-typedef unsigned char uint1;
-
-typedef char bool;
-#define true 1
-#define false 0
 
 // Style : \033[?m
 
@@ -82,6 +64,7 @@ typedef struct Board
     uint1 rowCount; // Max = 255
     uint1 colCount; // Max = 255
     uint2 bombsCount; // Max = 255*255 = 65_025
+    
     uint2 revealedCount; // Max = 255*255 = 65_025
     uint2 flaggedCount; // Max = 255*255 = 65_025
     
@@ -105,7 +88,7 @@ typedef struct Boundaries
 
 int AskKeyFromList( const short *const iList, short iSize )
 {
-    char cUser; int cUserIndex;
+    char cUser;
     char *const sList = ( char* ) malloc( iSize * sizeof( char ) );
     for ( int i = 0 ; i < iSize ; i++ )
         sList[ i ] = iList[ i ];
@@ -115,9 +98,8 @@ int AskKeyFromList( const short *const iList, short iSize )
         if ( kbhit() )
         {
             cUser = getch();
-            cUserIndex = CharInString( cUser, sList );
-            if ( cUserIndex != -1 )
-                return iList[ cUserIndex ];
+            if ( CharInString( cUser, sList ) != -1 )
+                return cUser;
         }
     }
     
@@ -174,7 +156,7 @@ void PlaceBombs( Board *const board )
             }
         }
     }
-
+    
     uint2 tileIndex;
     Boundaries boundaries;
     Coords transitionTile;
@@ -350,7 +332,7 @@ void StartGame( Board *const board )
 
         PrintBoard( board );
         
-        while ( !( board->isGameOver || board->revealedCount == (board->rowCount * board->colCount) - board->bombsCount ) )
+        while ( !( board->isGameOver || board->revealedCount + board->bombsCount == (board->rowCount * board->colCount) ) )
         {
             keyPressed = AskKeyFromList( keysList, 7 );
             
@@ -386,11 +368,6 @@ void StartGame( Board *const board )
             else if ( keyPressed == KEY_ZERO )
             {
                 FlagSelected( board );
-            }
-
-            else if ( keyPressed == KEY_ENTER )
-            {
-                break;
             }
             
             PrintBoard( board );

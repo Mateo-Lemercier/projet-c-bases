@@ -1,7 +1,6 @@
-#ifndef __genericFunctions_c__
-#define __genericFunctions_c__
+#ifndef __bigCharacters_c__
+#define __bigCharacters_c__
 #include "genericFunctions.c"
-#endif
 
 typedef struct bigCharacterLine
 {
@@ -895,3 +894,5 @@ void PrintBigText( const char* string, unsigned char line )
             printf( "         " );
     }
 }
+
+#endif

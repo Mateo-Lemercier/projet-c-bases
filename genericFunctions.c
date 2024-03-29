@@ -1,12 +1,7 @@
-#ifndef __stdio_h__
-#define __stdio_h__
+#ifndef __genericFunctions_c__
+#define __genericFunctions_c__
 #include <stdio.h>
-#endif
-
-#ifndef __stdlib_h__
-#define __stdlib_h__
 #include <stdlib.h>
-#endif
 
 
 
@@ -53,9 +48,7 @@ int AskIntBetween( const int iMin, const int iMax, const int iWhich )
     {
         iUser = AskInt();
         if ( ( iWhich%2 || iMin <= iUser ) && ( iUser <= iMax || !iWhich ) )
-        {
             return iUser;
-        }
 
         if ( 2-iWhich )
             printf( "Please, enter a number %s %d\n", sWhich, iCompare );
@@ -150,7 +143,7 @@ char AskCharFromList( const char* const sList )
 
 
 
-int AskYesOrNo( const char* const question)
+int AskYesOrNo( const char* const question )
 {
     printf(question);
     char cUser = AskCharFromList("yYnN\0");
@@ -167,10 +160,9 @@ int AskYesOrNo( const char* const question)
 
 int GetLength( const char* sString )
 {
-    int iLength = 0;
-    
-    while ( sString[ iLength ]!= '\0' )
-        iLength++;
-    
+    int iLength;
+    for ( iLength = 0; sString[ iLength ] != '\0'; iLength++ );
     return iLength;
 }
+
+#endif
